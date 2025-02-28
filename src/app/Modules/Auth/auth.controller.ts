@@ -15,7 +15,34 @@ const loginUser = catchAsync(async (req, res) => {
 
     res.status(200).json({
         success:true,
-        message:"register successful",
+        message:"login successful",
+        data: result
+    })
+})
+const allUser = catchAsync(async (req, res) => {
+    const result = await authServices.allUser();
+
+    res.status(200).json({
+        success:true,
+        message:"all user retrieved successful",
+        data: result
+    })
+})
+const singleUser = catchAsync(async (req, res) => {
+    const result = await authServices.singleUser(req.params.id);
+
+    res.status(200).json({
+        success:true,
+        message:"user retrieved successful",
+        data: result
+    })
+})
+const blockUser = catchAsync(async (req, res) => {
+    const result = await authServices.blockUser(req.params.id);
+
+    res.status(200).json({
+        success:true,
+        message:"block successful",
         data: result
     })
 })
@@ -24,5 +51,8 @@ const loginUser = catchAsync(async (req, res) => {
 
 export const authController={
     register,
-    loginUser
+    loginUser,
+    allUser,
+    singleUser,
+    blockUser
 }

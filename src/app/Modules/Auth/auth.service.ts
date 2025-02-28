@@ -13,7 +13,7 @@ const registerIntoDB = async (payload: IUser) => {
 
     }
     // hash password
-    payload.password = await bcrypt.hash(payload.password,Number(config.salt_round))
+    payload.password = await bcrypt.hash(payload.password, Number(config.salt_round))
 
 
     const res = await userModel.create(payload)
@@ -23,7 +23,7 @@ const registerIntoDB = async (payload: IUser) => {
 }
 
 
-const loginUser= async(payload:Pick<IUser,"password" | "email">)=>{
+const loginUser = async (payload: Pick<IUser, "password" | "email">) => {
     const isUserExist = await userModel.findOne({ email: payload.email })
     if (!isUserExist) {
         throw new AppError(404, "This user Not Found");
@@ -51,6 +51,19 @@ const loginUser= async(payload:Pick<IUser,"password" | "email">)=>{
 
 }
 
+const allUser = async () => {
+    const result = await userModel.find().select("-password")
+    return result
+}
+
+const singleUser = async (id: string) => {
+    const result = await userModel.findById(id).select("-password")
+    return result
+}
+const blockUser = async (id: string) => {
+    const result = await userModel.findByIdAndUpdate(id,{isBlocked:true},{new:true})
+    return result
+}
 
 
 
@@ -59,7 +72,13 @@ const loginUser= async(payload:Pick<IUser,"password" | "email">)=>{
 
 
 
-export const authServices={
+
+
+
+export const authServices = {
     registerIntoDB,
-    loginUser
+    loginUser,
+    allUser,
+    singleUser,
+    blockUser
 }
