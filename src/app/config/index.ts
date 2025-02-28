@@ -8,5 +8,6 @@ export default {
     node_env: process.env.NODE_ENV,
     port: process.env.PORT,
     dataBase_url: process.env.DATABASE_URL,
-    salt_round: process.env.SALT_ROUND
+    salt_round: process.env.SALT_ROUND,
+    jwt_secret: process.env.JWT_SECRET
 }

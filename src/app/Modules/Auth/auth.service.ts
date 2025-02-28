@@ -2,6 +2,7 @@ import config from "../../config";
 import AppError from "../../Error/AppError";
 import { IUser } from "./auth.interface";
 import { userModel } from "./auth.model";
+import jwt from 'jsonwebtoken'
 
 import bcrypt from 'bcrypt'
 
@@ -17,10 +18,48 @@ const registerIntoDB = async (payload: IUser) => {
 
     const res = await userModel.create(payload)
 
+    return res
+
+}
+
+
+const loginUser= async(payload:Pick<IUser,"password" | "email">)=>{
+    const isUserExist = await userModel.findOne({ email: payload.email })
+    if (!isUserExist) {
+        throw new AppError(404, "This user Not Found");
+
+    }
+    if (isUserExist.isBlocked) {
+        throw new AppError(403, "This User is blocked");
+    }
+    const isPassIsOk = await bcrypt.compare(payload?.password, isUserExist?.password)
+
+    if (!isPassIsOk) {
+        throw new AppError(401, "This password  is invalid");
+    }
+    const user = {
+        id: isUserExist?._id,
+        role: isUserExist?.role,
+        email: isUserExist?.email
+    }
+    const token = jwt.sign(user, config.jwt_secret as string, { expiresIn: "30d" })
+
+    return {
+        token
+    }
 
 
 }
 
+
+
+
+
+
+
+
+
 export const authServices={
-    registerIntoDB
+    registerIntoDB,
+    loginUser
 }
