@@ -18,6 +18,15 @@ router.post('/block-user/:id',auth("admin"),authController.blockUser)
 
 
 
+// user management
+
+router.put("/user/:id",auth("admin","user"), authController.updateProfile)
+router.delete("/user/:id",auth("admin","user"), authController.deleteProfile)
+
+
+
+
+
 
 
 

@@ -67,6 +67,19 @@ const blockUser = async (id: string) => {
 
 
 
+const updateProfile=async(id:string,payload:Partial<IUser>)=>{
+    const result = await userModel.findByIdAndUpdate(id,payload,{new:true})
+    return result
+
+}
+const deleteProfile=async(id:string)=>{
+    const result = await userModel.findByIdAndDelete(id)
+    return result
+
+}
+
+
+
 
 
 
@@ -80,5 +93,7 @@ export const authServices = {
     loginUser,
     allUser,
     singleUser,
-    blockUser
+    blockUser,
+    updateProfile,
+    deleteProfile
 }
