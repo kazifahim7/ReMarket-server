@@ -9,6 +9,6 @@ const userSchema = new Schema<IUser>({
     role: { type: String, enum: ["user", "admin"], default: 'user' },
     isBlocked: { type: Boolean, default: false }
 
-})
+},{timestamps:true})
 
 export const userModel = model<IUser>("user", userSchema)
