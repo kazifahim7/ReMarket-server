@@ -6,7 +6,7 @@ import { listingController } from './listing.controller';
 
 const router = express.Router()
 
-router.post('/listings',auth("user"),validateRequest(ListingValidationSchema),listingController.createListing)
+router.post('/listings',auth("user","admin"),validateRequest(ListingValidationSchema),listingController.createListing)
 router.get('/listings',listingController.allListingProduct)
 router.get('/listings/:id',auth("user"),listingController.productDetails)
 router.put("/listing/:id",auth('user'),listingController.updateProduct)

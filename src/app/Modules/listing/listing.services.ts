@@ -2,15 +2,18 @@ import { Types } from "mongoose";
 import { TListing } from "./listing.interface";
 import { ListingModel } from "./listing.model";
 import AppError from "../../Error/AppError";
+import QueryBuilder from "../../builder/QueryBuilder";
 
 const createListingInDB = async (payload: TListing, id: Types.ObjectId) => {
     payload.userID = id
     const result = await ListingModel.create(payload)
     return result
 }
-const allListingProduct = async () => {
+const allListingProduct = async (query:Record<string,unknown>) => {
 
-    const result = await ListingModel.find().populate("userID")
+    const productQuery = new QueryBuilder(ListingModel.find().populate("userID"),query).search(["title","address"])
+
+    const result = await productQuery.modelQuery
     return result
 }
 

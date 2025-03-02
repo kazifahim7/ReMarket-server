@@ -7,5 +7,7 @@ export type TListing = {
     condition:string,
     images:string[],
     userID:Types.ObjectId,
-    status:"available" | "sold"
+    status:"available" | "sold",
+    address?:string,
+    category?:string
 }

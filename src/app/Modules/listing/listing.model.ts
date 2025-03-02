@@ -7,6 +7,8 @@ const ListingSchema = new Schema<TListing>(
         description: { type: String, required: true },
         price: { type: String, required: true },
         condition: { type: String, required: true },
+        address: { type: String, required: true },
+        category: { type: String, required: true },
         images: { type: [String], required: true },
         userID: { type: Schema.Types.ObjectId, ref: "user", required: true },
         status: { type: String, enum: ["available", "sold"], default: "available" },

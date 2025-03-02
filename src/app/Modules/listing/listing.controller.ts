@@ -10,7 +10,7 @@ const createListing = catchAsync(async(req,res)=>{
     })
 })
 const allListingProduct = catchAsync(async(req,res)=>{
-    const result= await listingServices.allListingProduct()
+    const result= await listingServices.allListingProduct(req.query)
     res.status(200).json({
         success:true,
         message:"All product Retrieved successful",
