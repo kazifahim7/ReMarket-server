@@ -80,11 +80,38 @@ const createTransactionInDB = async (payload: TTransaction, buyerID: Types.Objec
 };
 
 
+const mySales = async(id:Types.ObjectId)=>{
+    const result = await TransactionModel.find({ sellerID :id})
+    return result;
+}
+const myPurchases = async(id:Types.ObjectId)=>{
+    const result = await TransactionModel.find({ buyerID :id})
+    return result;
+}
+
+
+const updateTranStatus = async (id: string) => {
+    const result = await TransactionModel.findOneAndUpdate({ sellerID: id }, { status:"complete"})
+    return result;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 export const transactionService = {
-    createTransactionInDB
+    createTransactionInDB,
+    mySales,
+    myPurchases, updateTranStatus
 }
